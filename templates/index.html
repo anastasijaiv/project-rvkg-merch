@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVKĢ merča</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="home">
+        <h1>Rīgas Valsts klasiskās ģimnāzijas merčs</h1>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="#home">RVKĢ</a>
+        <a href="#about">Par mūms</a>
+        <a href="#collections">Kolekcijas</a>
+        <a href="#Make">Izveido pats</a>
+
+        <a href="{{ url_for('admin_login') }}" class="admin-link"
+            onclick="window.location.href=this.href; return false;">Admin</a>
+    </nav>
+
+
+    <!-- About Section -->
+    <section class="content-wrapper main-content" id="about">
+        <div class="spacer"></div>
+        <h1>"NOSCE TE IPSUM"</h1>
+        <p>
+            Rīgas Valsts klasiskās ģimnazijas grafiskā identitāte iekļauj zīmolu un moto “nosce te ipsum”.<br>
+            Zīmols ir metaforiskais Delfu pilsētas Apolona templis.<br>
+            Moto ir latīņu valodas frāzē Nosce te ipsum! - Izzini pats sevi!
+        </p>
+        <div class="image-section">
+            <img src="https://www.rkg.lv/media/images/Rigas_Valsts_klasiskas_gimnazija.width-1400.format-webp.webp"
+                alt="rvkgLogo">
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="main-content" id="collections">
+        <h1>Kolekcijas</h1>
+        <div class="collections-grid">
+            <div class="collection-card" onclick="showCollection('aw2022')">
+                <img src="https://i.pinimg.com/736x/05/9d/84/059d84c4af61d13a05758da24ff94d9b.jpg"
+                    alt="Balta kolekcija">
+                <h3>Balta kolekcija</h3>
+                <p>Noklikšķiniet, lai apskatītu kolekciju</p>
+            </div>
+            <div class="collection-card" onclick="showCollection('ss2023')">
+                <img src="https://img.freepik.com/free-photo/photo-stone-texture-pattern_58702-16052.jpg?semt=ais_hybrid&w=740&q=80"
+                    alt="Melna kolekcija">
+                <h3>Melna kolekcija</h3>
+                <p>Noklikšķiniet, lai apskatītu kolekciju</p>
+            </div>
+            <div class="collection-card" onclick="showCollection('aw2024')">
+                <img src="https://i.pinimg.com/736x/fb/f0/ef/fbf0efd993d06415633881cd7b0c43de.jpg" alt="Zila kolekcija">
+                <h3>Zila kolekcija</h3>
+                <p>Noklikšķiniet, lai apskatītu kolekciju</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Modal -->
+    <div id="collectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-button active" onclick="filterCategory('all')">Visi</button>
+                <button class="filter-button" onclick="filterCategory('tops')">Topi</button>
+                <button class="filter-button" onclick="filterCategory('socks')">Zeķes</button>
+                <button class="filter-button" onclick="filterCategory('pants')">Bikses</button>
+                <button class="filter-button" onclick="filterCategory('accessories')">Aksesuāri</button>
+            </div>
+            <div class="collection-grid" id="modalGrid"></div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content image-modal-content">
+            <span class="close-button image-close">&times;</span>
+            <img id="fullSizeImage" src="" alt="">
+        </div>
+    </div>
+
+    <!-- Cart Notification -->
+    <div id="cartNotification" class="cart-notification">Pievienots grozam! 🛒</div>
+
+    <!-- Make Your Look Section -->
+    <section class="main-content" id="Make">
+        <h1>Izveido savu RVKĢ izskatu</h1>
+        <div class="wardrobe-container">
+            <!-- Wardrobe Sections -->
+            <div class="wardrobe-section">
+                <h3>Tops</h3>
+                <div class="item-viewer">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="item-frame"><img src="/static/pictures/logolook.png" alt="Top" id="top-img"></div>
+                    <button class="nav-btn next-btn">→</button>
+                </div>
+            </div>
+
+            <div class="wardrobe-section">
+                <h3>Zeķes</h3>
+                <div class="item-viewer">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="item-frame"><img src="/static/pictures/logolook.png" alt="Footwear" id="footwear-img">
+                    </div>
+                    <button class="nav-btn next-btn">→</button>
+                </div>
+            </div>
+
+            <div class="wardrobe-section">
+                <h3>Cepure</h3>
+                <div class="item-viewer">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="item-frame"><img src="/static/pictures/logolook.png" alt="Hat" id="hat-img"></div>
+                    <button class="nav-btn next-btn">→</button>
+                </div>
+            </div>
+
+            <div class="wardrobe-section">
+                <h3>Bikses</h3>
+                <div class="item-viewer">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="item-frame"><img src="/static/pictures/logolook.png" alt="Pants" id="pants-img"></div>
+                    <button class="nav-btn next-btn">→</button>
+                </div>
+            </div>
+
+            <div class="wardrobe-section">
+                <h3>Soma</h3>
+                <div class="item-viewer">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="item-frame"><img src="/static/pictures/logolook.png" alt="Bag" id="bag-img"></div>
+                    <button class="nav-btn next-btn">→</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="confirm-look" class="confirm-button">Apstiprināt izskatu</button>
+
+        <div id="final-look" class="final-look">
+            <h2>Jūsu radītais izskats</h2>
+            <div class="selected-items"></div>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <button class="cart-button" onclick="openCart()">
+        🛒<span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-modal-content">
+            <div class="cart-header">
+                <h2>Jūsu grozs</h2>
+                <span class="close-button" onclick="closeCart()">&times;</span>
+            </div>
+            <div id="cartItems" class="cart-items"></div>
+
+            <div class="promo-section">
+                <div id="promoApplied" class="promo-applied" style="display: none;">
+                    <span class="promo-applied-text">
+                        ✓ Promocode: <strong id="appliedPromoCode"></strong> (-<span id="appliedDiscount"></span>%)
+                    </span>
+                    <button class="remove-promo-button" onclick="removePromoCode()">Noņemt</button>
+                </div>
+                <div id="promoInputSection">
+                    <div class="promo-input-group">
+                        <input type="text" id="promoInput" class="promo-input" placeholder="Ievadiet promocode..." />
+                        <button class="apply-promo-button" onclick="applyPromoCode()">Pielietot</button>
+                    </div>
+                    <div id="promoMessage" class="promo-message"></div>
+                </div>
+            </div>
+
+            <div class="cart-total">
+                <div id="discountRow" class="discount-row" style="display: none;">
+                    <span>Atlaide:</span>
+                    <span id="discountAmount">-0.00€</span>
+                </div>
+                <h3>Kopā: <span id="cartTotal">0.00€</span></h3>
+            </div>
+
+            <div class="cart-actions">
+                <button class="clear-cart-button" onclick="clearCart()">Iztukšot grozu</button>
+                <button class="checkout-button" onclick="checkout()">Apmaksāt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 RVKg merča</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+
+<body>
+
+    <h1>Admin Dashboard</h1>
+
+    <!-- Logout Button -->
+    <form action="{{ url_for('admin_logout') }}" method="get">
+        <button class="btn btn-logout" type="submit">Logout</button>
+    </form>
+
+    <!-- Add Buttons -->
+    <button class="btn btn-edit" type="button" onclick="openAddModal()">
+        Add New Product
+    </button>
+
+    <button class="btn btn-edit" type="button" onclick="openAddPromoModal()">
+        Add New Promo Code
+    </button>
+
+    <!-- Search Products -->
+    <form method="GET" action="{{ url_for('admin_dashboard') }}" style="margin: 15px 0;">
+        <input type="text" name="q" placeholder="Search by name, category or description"
+            value="{{ request.args.get('q', '') }}" style="padding:6px; width:280px;">
+        <button type="submit" class="btn btn-edit">Search</button>
+        {% if request.args.get('q') %}
+        <a href="{{ url_for('admin_dashboard') }}" style="margin-left:10px;">Clear</a>
+        {% endif %}
+    </form>
+
+    <!-- ------------------- PRODUCTS TABLE ------------------- -->
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price (€)</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td><img src="{{ product.image_url }}" alt="{{ product.name }}"></td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ "%.2f"|format(product.price) }}</td>
+                <td>{{ product.description }}</td>
+                <td>
+                    <button class="btn btn-edit"
+                            type="button"
+                            data-id="{{ product.id }}"
+                            data-name="{{ product.name }}"
+                            data-category="{{ product.category }}"
+                            data-image="{{ product.image_url }}"
+                            data-collection="{{ product.collection_id }}"
+                            data-price="{{ product.price }}"
+                            data-description="{{ product.description }}"
+                            onclick="openEditModal(this)">
+                        Edit
+                    </button>
+                    <form method="POST" action="/admin/delete-product" style="display:inline;"
+                        onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        <input type="hidden" name="id" value="{{ product.id }}">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ------------------- PROMO CODES TABLE ------------------- -->
+    <h2>Promo Codes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Discount (%)</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for promo in promo_codes %}
+            <tr>
+                <td>{{ promo.code }}</td>
+                <td>{{ promo.discount }}</td>
+                <td>{{ promo.description }}</td>
+                <td>
+                    <button class="btn btn-edit"
+                            type="button"
+                            data-id="{{ promo.id }}"
+                            data-code="{{ promo.code }}"
+                            data-discount="{{ promo.discount }}"
+                            data-description="{{ promo.description }}"
+                            onclick="openEditPromoModal(this)">
+                        Edit
+                    </button>
+                    <form method="POST" action="/admin/delete-promo" style="display:inline;"
+                        onsubmit="return confirm('Are you sure you want to delete this promo code?');">
+                        <input type="hidden" name="id" value="{{ promo.id }}">
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- ------------------- MODALS ------------------- -->
+
+    <!-- EDIT PRODUCT MODAL -->
+    <div id="editModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <span class="close-btn" onclick="closeEditModal()">×</span>
+            <h2>Edit Product</h2>
+            <form method="POST" action="/admin/update-product">
+                <input type="hidden" name="id" id="edit-id">
+                <label>Name</label>
+                <input type="text" name="name" id="edit-name" required>
+                <label>Category</label>
+                <select name="category" id="edit-category" required>
+                    <option value="">— Select category —</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+                <label>Image URL</label>
+                <input type="text" name="image_url" id="edit-image">
+                <label>Collection</label>
+                <select name="collection_id" id="edit-collection">
+                    <option value="">— Select collection —</option>
+                    {% for c in collections %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+                <label>Price (€)</label>
+                <input type="number" step="0.01" name="price" id="edit-price">
+                <label>Description</label>
+                <textarea name="description" id="edit-description"></textarea>
+                <button type="submit" class="admin-save-btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD PRODUCT MODAL -->
+    <div id="addModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <span class="close-btn" onclick="closeAddModal()">×</span>
+            <h2>Add Product</h2>
+            <form method="POST" action="/admin/add-product">
+                <label>Name</label>
+                <input type="text" name="name" required>
+                <label>Category</label>
+                <select name="category" required>
+                    <option value="">— Select category —</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+                <label>Image URL</label>
+                <input type="text" name="image_url">
+                <label>Collection</label>
+                <select name="collection_id">
+                    <option value="">— Select collection —</option>
+                    {% for c in collections %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+                <label>Price (€)</label>
+                <input type="number" step="0.01" name="price" required>
+                <label>Description</label>
+                <textarea name="description"></textarea>
+                <button type="submit" class="admin-save-btn">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD PROMO MODAL -->
+    <div id="addPromoModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <span class="close-btn" onclick="closeAddPromoModal()">×</span>
+            <h2>Add Promo Code</h2>
+            <form method="POST" action="/admin/add-promo">
+                <label>Code</label>
+                <input type="text" name="code" required>
+                <label>Discount (%)</label>
+                <input type="number" name="discount" required>
+                <label>Description</label>
+                <textarea name="description"></textarea>
+                <button type="submit" class="admin-save-btn">Add Promo</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- EDIT PROMO MODAL -->
+    <div id="editPromoModal" class="admin-modal">
+        <div class="admin-modal-content">
+            <span class="close-btn" onclick="closeEditPromoModal()">×</span>
+            <h2>Edit Promo Code</h2>
+            <form method="POST" action="/admin/edit-promo">
+                <input type="hidden" name="id" id="edit-promo-id">
+                <label>Code</label>
+                <input type="text" name="code" id="edit-promo-code" required>
+                <label>Discount (%)</label>
+                <input type="number" name="discount" id="edit-promo-discount" required>
+                <label>Description</label>
+                <textarea name="description" id="edit-promo-description"></textarea>
+                <button type="submit" class="admin-save-btn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+
+</body>
+</html>

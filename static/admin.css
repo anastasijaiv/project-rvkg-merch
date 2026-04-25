@@ -1,0 +1,464 @@
+/* ===============================
+   ADMIN DASHBOARD - PREMIUM STYLE
+   (Matches main site design)
+================================ */
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap');
+
+/* Reset & Base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Layout Container */
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: #0e1a44;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 40px 0 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #0e1a44;
+    font-size: 1.5rem;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #e4b400;
+    
+    /* Centering changes */
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* Wrapper for content centering */
+body > *:not(.admin-modal) {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+/* ===============================
+   HEADER / ACTIONS BAR
+================================ */
+
+/* Logout Button positioning */
+.btn-logout {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    z-index: 100;
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(204, 0, 0, 0.3);
+}
+
+/* Wrapper for Add Buttons (New) */
+.admin-actions-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Search Form Styling */
+form[action*="admin_dashboard"] {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    margin-bottom: 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centered content */
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+form[action*="admin_dashboard"] input[type="text"] {
+    flex: 0 1 300px; /* Adjusted width for better centering */
+    min-width: 200px;
+    padding: 12px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+form[action*="admin_dashboard"] input[type="text"]:focus {
+    outline: none;
+    border-color: #e4b400;
+}
+
+/* ===============================
+   BUTTONS (Golden & Dark Blue Styles)
+================================ */
+
+.btn {
+    padding: 10px 20px;
+    margin: 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Main Action Buttons (Add Product, Search) */
+.btn-edit:not(.btn-delete) {
+    background: linear-gradient(135deg, #e4b400 0%, #d4a700 100%);
+    color: #0e1a44;
+    box-shadow: 0 4px 15px rgba(228, 180, 0, 0.3);
+}
+
+.btn-edit:not(.btn-delete):hover {
+    background: linear-gradient(135deg, #d4a700 0%, #c49700 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(228, 180, 0, 0.4);
+}
+
+/* Delete Buttons */
+.btn-delete {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 68, 68, 0.2);
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #cc0000, #aa0000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 68, 68, 0.3);
+}
+
+/* ===============================
+   TABLES (Modern Card Style)
+================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden; /* Ensures rounded corners show */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
+}
+
+thead {
+    background: linear-gradient(135deg, #0e1a44 0%, #1a2d66 100%);
+}
+
+th {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    padding: 18px 15px;
+    text-align: left;
+}
+
+td {
+    padding: 18px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #666;
+    vertical-align: middle;
+}
+
+/* Table Row Hover */
+tbody tr:hover {
+    background-color: #fafafa;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Table Images */
+td img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+td img:hover {
+    transform: scale(1.1);
+}
+
+/* ===============================
+   MODALS (Premium Popup)
+================================ */
+
+.admin-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+    
+    /* Centering */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.admin-modal-content {
+    background-color: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-modal-content h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #0e1a44;
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: none;
+    display: block;
+}
+
+/* Close Button (X) */
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(228, 180, 0, 0.1);
+    color: #e4b400;
+    transform: rotate(90deg);
+}
+
+/* Modal Form Inputs */
+.admin-modal-content label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #0e1a44;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    display: block;
+}
+
+.admin-modal-content input,
+.admin-modal-content select,
+.admin-modal-content textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background: #fff;
+}
+
+.admin-modal-content input:focus,
+.admin-modal-content select:focus,
+.admin-modal-content textarea:focus {
+    outline: none;
+    border-color: #e4b400;
+}
+
+.admin-modal-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Save Button inside Modal */
+.admin-save-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #0e1a44 0%, #1a2d66 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(14, 26, 68, 0.3);
+}
+
+.admin-save-btn:hover {
+    background: linear-gradient(135deg, #1a2d66 0%, #2a3d76 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 26, 68, 0.4);
+}
+
+/* Clear Link */
+a[href*="admin_dashboard"] {
+    color: #e4b400;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 10px;
+    transition: color 0.2s;
+}
+
+a[href*="admin_dashboard"]:hover {
+    color: #d4a700;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+    .btn-logout {
+        position: static;
+        width: 100%;
+        margin-bottom: 20px;
+        display: block;
+    }
+    
+    /* Stack action buttons on mobile */
+    .admin-actions-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-actions-wrapper .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    form[action*="admin_dashboard"] {
+        flex-direction: column;
+    }
+    
+    form[action*="admin_dashboard"] input[type="text"] {
+        width: 100%;
+    }
+
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    } 
+    
+    thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    } 
+    
+    tr { 
+        margin: 0 0 20px 0; 
+        border: 1px solid #e9ecef; 
+        border-radius: 15px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    td { 
+        border: none; 
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50%; 
+        text-align: right;
+    } 
+    
+    td:before { 
+        position: absolute;
+        top: 18px;
+        left: 15px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        font-weight: bold;
+        color: #0e1a44;
+        font-family: 'Montserrat', sans-serif;
+        content: attr(data-label); 
+    } 
+    
+    td:nth-of-type(1):before { content: "Image"; }
+    td:nth-of-type(2):before { content: "Name"; }
+    td:nth-of-type(3):before { content: "Category"; }
+    td:nth-of-type(4):before { content: "Price"; }
+    td:nth-of-type(5):before { content: "Description"; }
+    td:nth-of-type(6):before { content: "Actions"; text-align: left;}
+    
+    td:last-child {
+        text-align: center;
+        padding-left: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding-bottom: 20px;
+    }
+    td:last-child:before {
+        display: none;
+    }
+} 
