@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import sqlite3
 from werkzeug.serving import WSGIRequestHandler
+import os
 
 app = Flask(__name__)
 app.secret_key = "very-secret-key-change-later"
@@ -406,7 +407,14 @@ if __name__ == "__main__":
     create_admin_table()
     insert_admin()
 
-    app.run(
-        debug=True,
-        request_handler=QuietRequestHandler
-    )
+    if __name__ == "__main__":
+        create_admin_table()
+        insert_admin()
+
+        port = int(os.environ.get("PORT", 5000))
+        app.run(
+            host ="0.0.0.0",
+            port=port,
+            debug=False,
+            request_handler = QuietRequestHandler
+        )
